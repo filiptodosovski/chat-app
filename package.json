@@ -1,0 +1,32 @@
+{
+  "name": "invit-app",
+  "private": true,
+  "version": "0.0.1",
+  "workspaces": [
+    "apps/api",
+    "apps/web",
+    "packages/*",
+    "packages/**/*"
+  ],
+  "scripts": {
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "build": "turbo build",
+    "build:cms": "turbo build --filter=cms",
+    "build:api": "turbo build --filter=api",
+    "start": "turbo start",
+    "api": "turbo dev --filter=api",
+    "web": "turbo dev --filter=web",
+    "postinstall": "husky"
+  },
+  "engines": {
+    "npm": "please-use-yarn",
+    "yarn": ">=1.22.15",
+    "node": ">=18.12.1"
+  },
+  "devDependencies": {
+    "husky": "9.0.11",
+    "lint-staged": "15.2.2",
+    "turbo": "1.12.2"
+  }
+}
