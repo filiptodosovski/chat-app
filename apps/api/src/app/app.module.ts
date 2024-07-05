@@ -1,20 +1,20 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../entity/user.entity';
 import { UserModule } from '../modules/user/user.module';
-import { Message } from '../entity/message.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { databaseConfig } from '../config/database.config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'filiptodosovski',
-      password: '',
-      database: 'chatapp',
-      entities: [User, Message],
-      synchronize: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [databaseConfig],
+    }),
+    TypeOrmModule.forRootAsync({
+      useFactory: async (config: ConfigService) => ({
+        ...(await config.get('db')),
+      }),
+      inject: [ConfigService],
     }),
     UserModule,
   ],
