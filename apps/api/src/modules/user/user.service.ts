@@ -14,9 +14,9 @@ export class UserService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  async findOne(id: number) {
+  async findOne(username: string) {
     return this.userRepository.findOne({
-      where: { id },
+      where: { username },
     });
   }
 

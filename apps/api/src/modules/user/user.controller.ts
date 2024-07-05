@@ -7,8 +7,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get('/')
-  async findOneUser(@Query('id') id: number) {
-    return await this.userService.findOne(id);
+  async findOneUser(@Query('username') username: string) {
+    return await this.userService.findOne(username);
   }
 
   @Post('/')
