@@ -6,6 +6,7 @@ import { databaseConfig } from '../config/database.config';
 import { MessageModule } from '../modules/message/message.module';
 import { AuthModule } from '../modules/auth/auth.module';
 import { authConfig } from '../config/auth.config';
+import { EventsModule } from '../modules/events/events.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { authConfig } from '../config/auth.config';
     UserModule,
     MessageModule,
     AuthModule,
+    EventsModule,
   ],
 })
 export class AppModule {}

@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/createUser.dto';
+import process from 'node:process';
 
 @Controller('user')
 export class UserController {
@@ -8,6 +9,7 @@ export class UserController {
 
   @Get('/')
   async findOneUser(@Query('username') username: string) {
+    console.log(parseInt(process.env.WS_PORT, 10));
     return await this.userService.findOne(username);
   }
 
