@@ -8,7 +8,11 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Head>
         <title>Chat App</title>
       </Head>
-      <Component {...pageProps} />
+      <div className="bg-bgPrimary min-h-screen">
+        <main>
+          <Component {...pageProps} />
+        </main>
+      </div>
     </>
   )
 }
