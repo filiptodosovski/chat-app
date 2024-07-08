@@ -5,6 +5,7 @@ import {
 } from '@/domains/auth/components/SignInForm/validation/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormInput } from '@/form-fields/FormInput/FormInput'
+import { LABELS } from '@/domains/auth/components/SignInForm/types'
 
 export const SignInForm = () => {
   const methods = useForm<TSignInValidationSchema>({
@@ -24,14 +25,14 @@ export const SignInForm = () => {
             <FormInput
               name="username"
               type="text"
-              label="Username"
-              placeholder="Enter your username"
+              label={LABELS.username}
+              placeholder={LABELS.usernamePlaceholder}
             />
             <FormInput
               name="password"
               type="password"
-              label="Password"
-              placeholder="Enter your password"
+              label={LABELS.password}
+              placeholder={LABELS.passwordPlaceholder}
             />
           </div>
           <div className="self-center">
@@ -39,7 +40,7 @@ export const SignInForm = () => {
               type="submit"
               className="px-4 py-2 bg-buttonPrimary text-white rounded mt-4"
             >
-              Sign In
+              {LABELS.signIn}
             </button>
           </div>
         </div>
