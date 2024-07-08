@@ -15,8 +15,19 @@ export const FormInput = <T extends FieldValues>({
   name,
   ...props
 }: IFormInputProps<T>) => {
-  const { control } = useFormContext()
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext()
   const { field } = useController({ name, control })
 
-  return <Input {...field} {...props} />
+  console.log(errors[name as string]?.message as string)
+
+  return (
+    <Input
+      {...field}
+      {...props}
+      error={errors[name as string]?.message as string}
+    />
+  )
 }

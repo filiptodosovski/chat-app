@@ -3,4 +3,7 @@ export interface IInputProps {
   value?: string
   label?: string
   className?: string
+  type?: 'text' | 'password'
+  error?: string
+  placeholder?: string
 }

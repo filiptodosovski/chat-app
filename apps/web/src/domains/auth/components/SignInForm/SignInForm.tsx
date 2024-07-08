@@ -12,22 +12,37 @@ export const SignInForm = () => {
     mode: 'onChange',
   })
 
-  const handleOnSubmit = () => {
-    console.log('submited')
+  const handleOnSubmit = (data: TSignInValidationSchema) => {
+    console.log('submited', data)
   }
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(handleOnSubmit)}>
-        <div>
-          <FormInput name="username" />
+        <div className="flex flex-col">
+          <div className="flex flex-col gap-2 w-[300px]">
+            <FormInput
+              name="username"
+              type="text"
+              label="Username"
+              placeholder="Enter your username"
+            />
+            <FormInput
+              name="password"
+              type="password"
+              label="Password"
+              placeholder="Enter your password"
+            />
+          </div>
+          <div className="self-center">
+            <button
+              type="submit"
+              className="px-4 py-2 bg-buttonPrimary text-white rounded mt-4"
+            >
+              Sign In
+            </button>
+          </div>
         </div>
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded mt-4"
-        >
-          Submit
-        </button>
       </form>
     </FormProvider>
   )
