@@ -6,15 +6,29 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormInput } from '@/form-fields/FormInput/FormInput'
 import { LABELS } from '@/domains/auth/components/SignInForm/types'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 export const SignInForm = () => {
+  const router = useRouter()
   const methods = useForm<TSignInValidationSchema>({
     resolver: zodResolver(signInValidationForm),
     mode: 'onChange',
   })
 
-  const handleOnSubmit = (data: TSignInValidationSchema) => {
-    console.log('submited', data)
+  const handleOnSubmit = async ({
+    username,
+    password,
+  }: TSignInValidationSchema) => {
+    const result = await signIn('credentials', {
+      username,
+      password,
+      redirect: false,
+    })
+
+    if (result?.ok) {
+      await router.push('/')
+    }
   }
 
   return (

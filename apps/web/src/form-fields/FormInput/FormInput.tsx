@@ -21,8 +21,6 @@ export const FormInput = <T extends FieldValues>({
   } = useFormContext()
   const { field } = useController({ name, control })
 
-  console.log(errors[name as string]?.message as string)
-
   return (
     <Input
       {...field}
