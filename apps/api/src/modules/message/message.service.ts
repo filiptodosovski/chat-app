@@ -21,7 +21,7 @@ export class MessageService {
     return await this.messageRepository.find({
       relations: ['user'],
       select: {
-        user: { id: true },
+        user: { id: true, username: true },
       },
     });
   }
