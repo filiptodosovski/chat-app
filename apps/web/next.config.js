@@ -6,8 +6,8 @@ const nextConfig = {
       {
         source: `${'/server'}/:path*`,
         destination: `${
-          process.env.BACKEND_URL ?? 'http://backend:8080'
-        }:path*`,
+          process.env.BACKEND_URL ?? 'http://localhost:5002'
+        }/:path*`,
       },
     ]
   },
