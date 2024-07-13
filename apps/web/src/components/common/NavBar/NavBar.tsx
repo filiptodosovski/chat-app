@@ -1,9 +1,16 @@
 import { LABELS } from '@components/common/NavBar/utils/labels'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Modal } from '@/components'
+import { INavBar } from '@components/common/NavBar/types'
+import { signOut } from 'next-auth/react'
 
-export const NavBar = () => {
+export const NavBar = ({ session }: INavBar) => {
   const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    session && setIsOpen(false)
+  }, [session])
+
   return (
     <>
       <Modal open={isOpen} onClose={() => setIsOpen(false)} />
@@ -14,12 +21,21 @@ export const NavBar = () => {
           </h1>
         </div>
         <div className="mx-4 bg-buttonPrimary border-2 px-5 my-1">
-          <button
-            className="mt-1 font-bold text-textPrimary text-xl"
-            onClick={() => setIsOpen(true)}
-          >
-            {LABELS.signIn}
-          </button>
+          {!session ? (
+            <button
+              className="mt-1 font-bold text-textPrimary text-xl"
+              onClick={() => setIsOpen(true)}
+            >
+              {LABELS.signIn}
+            </button>
+          ) : (
+            <button
+              className="mt-1 font-bold text-textPrimary text-xl"
+              onClick={() => signOut()}
+            >
+              {LABELS.signOut}
+            </button>
+          )}
         </div>
       </div>
     </>

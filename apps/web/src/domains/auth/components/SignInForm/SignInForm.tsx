@@ -5,9 +5,9 @@ import {
 } from '@/domains/auth/components/SignInForm/validation/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormInput } from '@/form-fields/FormInput/FormInput'
-import { LABELS } from '@/domains/auth/components/SignInForm/types'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import { LABELS } from '@/domains/auth/components/SignInForm/utils/labels'
 
 export const SignInForm = () => {
   const router = useRouter()
