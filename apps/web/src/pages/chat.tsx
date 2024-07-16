@@ -1,15 +1,20 @@
-import { useQuery } from '@tanstack/react-query'
-import { DataService } from '@services'
+import { ChatDialog } from '@/domains/chat'
+import { useState } from 'react'
 import { useSession } from 'next-auth/react'
 
 const ChatPage = () => {
-  const { data: session } = useSession()
-  const { data: messages } = useQuery({
-    queryFn: DataService.getMessage,
-    queryKey: DataService.getMessage.queryKey,
-  })
+  const [isOpen, setIsOpen] = useState(false)
 
-  console.log(messages)
-  return <h1>chat page</h1>
+  const { data: session } = useSession()
+
+  return (
+    <div>
+      <ChatDialog
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        username={session?.user?.username}
+      />
+    </div>
+  )
 }
 export default ChatPage

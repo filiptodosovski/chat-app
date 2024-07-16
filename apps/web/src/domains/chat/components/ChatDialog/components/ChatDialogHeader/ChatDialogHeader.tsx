@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Dialog } from '@headlessui/react'
 
 interface IChatDialogHeaderProps {
-  username: string
+  username: string | undefined
 }
 
 export const ChatDialogHeader: FC<IChatDialogHeaderProps> = ({ username }) => {

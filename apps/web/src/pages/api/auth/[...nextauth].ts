@@ -13,7 +13,7 @@ export default NextAuth({
       },
       async authorize(credentials) {
         const payload = {
-          email: credentials?.username,
+          username: credentials?.username,
           password: credentials?.password,
         }
 

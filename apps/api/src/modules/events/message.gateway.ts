@@ -1,5 +1,4 @@
 import {
-  ConnectedSocket,
   MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -17,7 +16,6 @@ import { MessageService } from '../message/message.service';
 const wsPort = parseInt(process.env.WS_PORT ?? '3200', 10);
 
 @WebSocketGateway(wsPort, {
-  namespace: 'chat',
   cors: {
     origin: '*',
   },
@@ -39,20 +37,7 @@ export class MessageGateway
   }
   // Move this to middleware
   handleConnection(client: Socket) {
-    try {
-      const authHeader = client.handshake.headers.authorization;
-      if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        this.logger.log('Missing or invalid authorization header');
-      }
-
-      const token = authHeader.split(' ')[1];
-      const userId = this.tokenService.getUserIdFromToken(token);
-      client.data.userId = userId;
-      console.log(`Client connected with user ID: ${userId}`);
-    } catch (error) {
-      console.error(`Authentication error: ${error}`);
-      client.disconnect(true);
-    }
+    console.log('client connected', client);
   }
 
   handleDisconnect(client: Socket) {
@@ -61,11 +46,9 @@ export class MessageGateway
   }
 
   @SubscribeMessage('message')
-  async handleMessage(
-    @MessageBody() content: string,
-    @ConnectedSocket() client: Socket,
-  ) {
-    const userId = client.data.userId;
+  async handleMessage(@MessageBody() payload: any) {
+    console.log('message', payload);
+    const { userId, content } = payload;
     const message = await this.messageService.create(content, userId);
     this.server.emit('message', message);
   }

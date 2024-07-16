@@ -2,7 +2,7 @@ export interface IMessage {
   id: number
   created_at: Date
   updated_at: Date
-  user: IMessage
+  user: IUser
   content: string
 }
 
