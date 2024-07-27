@@ -9,7 +9,6 @@ export class UserController {
 
   @Get('/')
   async findOneUser(@Query('username') username: string) {
-    console.log(parseInt(process.env.WS_PORT, 10));
     return await this.userService.findOne(username);
   }
 
