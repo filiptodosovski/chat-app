@@ -33,7 +33,7 @@ export class MessageGateway
   ) {}
 
   afterInit(server: Server) {
-    this.logger.log(`Initialized ${server}`);
+    this.logger.log(`Initialized ${server} server`);
   }
   // Move this to middleware
   handleConnection(client: Socket) {
