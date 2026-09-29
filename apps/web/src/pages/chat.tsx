@@ -1,9 +1,11 @@
 import { ChatDialog } from '@/domains/chat'
 import { useState } from 'react'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 const ChatPage = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
+  const router = useRouter()
 
   const { data: session } = useSession()
 
@@ -11,7 +13,10 @@ const ChatPage = () => {
     <div>
       <ChatDialog
         open={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={() => {
+          setIsOpen(false)
+          router.push('/')
+        }}
         username={session?.user?.username}
       />
     </div>

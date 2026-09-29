@@ -5,7 +5,6 @@ export const Home = () => {
   const { data: session } = useSession()
   return (
     <>
-      {session && console.log(session)}
       <NavBar session={session} />
     </>
   )
