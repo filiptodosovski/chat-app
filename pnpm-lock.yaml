@@ -168,9 +168,6 @@ importers:
       '@hookform/resolvers':
         specifier: ^3.9.0
         version: 3.10.0(react-hook-form@7.89.0(@types/react@18.3.31)(react@18.3.1))
-      '@rounik/react-custom-hooks':
-        specifier: ^0.1.13
-        version: 0.1.13(react@18.3.1)(typescript@5.1.3)
       '@tanstack/react-query':
         specifier: ^5.51.1
         version: 5.104.0(react@18.3.1)
@@ -1187,12 +1184,6 @@ packages:
     resolution: {integrity: sha512-AzsuD9OfxTOZMMvTRhlN3oHBwOmFN7tDh27LzqmHt4+uOgPhJT7ZM7/kVs/8/o0WxayMUIk3hBmCFRHv1FUoag==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
-
-  '@rounik/react-custom-hooks@0.1.13':
-    resolution: {integrity: sha512-IMED7wKH9wqfQb8yXRbZZirMiDAChmtD2ygABtcKGQ1iF3dAeJKW9fm64lC2nP3mdmKiE2MLxLWWBWtugp4s9Q==}
-    peerDependencies:
-      react: '>=18.2.0'
-      typescript: '>=4.6.4'
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
@@ -2290,10 +2281,6 @@ packages:
   depd@2.0.0:
     resolution: {integrity: sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==}
     engines: {node: '>= 0.8'}
-
-  dequal@2.0.3:
-    resolution: {integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==}
-    engines: {node: '>=6'}
 
   detect-libc@2.1.2:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
@@ -6098,12 +6085,6 @@ snapshots:
     dependencies:
       react: 18.3.1
 
-  '@rounik/react-custom-hooks@0.1.13(react@18.3.1)(typescript@5.1.3)':
-    dependencies:
-      dequal: 2.0.3
-      react: 18.3.1
-      typescript: 5.1.3
-
   '@rtsao/scc@1.1.0': {}
 
   '@sinclair/typebox@0.27.12': {}
@@ -7275,8 +7256,6 @@ snapshots:
   delayed-stream@1.0.0: {}
 
   depd@2.0.0: {}
-
-  dequal@2.0.3: {}
 
   detect-libc@2.1.2:
     optional: true
