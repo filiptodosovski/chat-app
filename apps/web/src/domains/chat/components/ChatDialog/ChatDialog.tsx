@@ -1,9 +1,9 @@
-import { type FC, useState } from 'react'
+import { type FC, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { DataService } from '@services'
-import { useUpdate } from '@rounik/react-custom-hooks'
+import { TMessage } from '@/domains/chat/types'
 import {
   MessagesContainer,
   ChatDialogHeader,
@@ -25,33 +25,41 @@ export const ChatDialog: FC<IChatDialogProps> = ({
 }) => {
   const [message, setMessage] = useState('')
   const { sendMessage, listenForMessages } = useWebSocketContext()
+  const queryClient = useQueryClient()
 
   const { data: session } = useSession()
+  const queryEnabled = !!session?.user?.username && !!username
 
-  const { data: chat, refetch } = useQuery({
+  const { data: chat } = useQuery({
     queryKey: DataService.getMessage.queryKey,
     queryFn: () => DataService.getMessage(),
-    enabled: !!session?.user?.username && !!username,
+    enabled: queryEnabled,
   })
 
-  useUpdate(() => {
-    if (chat) {
-      listenForMessages(refetch)
-    }
-  }, [chat])
+  useEffect(() => {
+    if (!queryEnabled) return
 
-  const isMyMessage = (email: string) => session?.user?.username === username
+    return listenForMessages((message) => {
+      queryClient.setQueryData(
+        DataService.getMessage.queryKey,
+        (old: TMessage[] = []) => [...old, message],
+      )
+    })
+  }, [queryEnabled, listenForMessages, queryClient])
+
+  const isMyMessage = (message: TMessage) =>
+    message.user.id === session?.user?.id
 
   const onHandleSendMessage = () => {
     if (!message) return
 
-    sendMessage(session?.user?.id, message)
+    sendMessage(message)
     setMessage('')
   }
 
   return (
     <>
-      <Transition appear show={true} as={Fragment}>
+      <Transition appear show={open} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={onClose}>
           <Transition.Child
             as={Fragment}

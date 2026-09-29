@@ -20,6 +20,14 @@ export class UserService {
     });
   }
 
+  async findOneWithPassword(username: string) {
+    return this.userRepository
+      .createQueryBuilder('user')
+      .addSelect('user.password')
+      .where('user.username = :username', { username })
+      .getOne();
+  }
+
   async createUser(username: string, password: string) {
     const existingUser = await this.userRepository.findOne({
       where: { username },
@@ -37,7 +45,9 @@ export class UserService {
     });
 
     try {
-      return await this.userRepository.save(user);
+      const saved = await this.userRepository.save(user);
+      const { password: _, ...userWithoutPassword } = saved;
+      return userWithoutPassword;
     } catch (error) {
       throw new InternalServerErrorException(error);
     }

@@ -1,33 +1,21 @@
 {
   "parser": "@typescript-eslint/parser",
   "root": true,
-  "plugins": ["@typescript-eslint", "security", "jsx-a11y"],
+  "plugins": ["@typescript-eslint", "security"],
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:security/recommended",
-    "plugin:jsx-a11y/recommended",
     "prettier",
-    "plugin:prettier/recommended",
-    "plugin:@next/next/recommended"
+    "plugin:prettier/recommended"
   ],
   "env": {
     "es6": true,
-    "browser": true,
     "jest": true,
     "node": true
   },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  },
   "rules": {
     "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
-    "react/react-in-jsx-scope": 0,
-    "react/display-name": 0,
-    "react/prop-types": 0,
     "security/detect-non-literal-fs-filename": 0,
     "@typescript-eslint/explicit-function-return-type": 0,
     "@typescript-eslint/explicit-member-accessibility": 0,
@@ -35,7 +23,6 @@
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-var-requires": 0,
     "linebreak-style": ["error", "unix"],
-    "jsx-a11y/anchor-is-valid": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/no-use-before-define": [
       "error",

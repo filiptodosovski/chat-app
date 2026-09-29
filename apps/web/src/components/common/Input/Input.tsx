@@ -8,14 +8,15 @@ export const InputComponent = (
   return (
     <>
       <div>
-        <label htmlFor="{name}" className="mt-2">
+        <label htmlFor={name} className="mt-2">
           {label}
         </label>
         <input
+          id={name}
           name={name}
           value={value}
           placeholder={placeholder}
-          className="border-[1px] p-2 h-8 w-full placeholder:opacity-50 text-sm"
+          className={`border-[1px] p-2 h-8 w-full placeholder:opacity-50 text-sm${className ? ` ${className}` : ''}`}
           ref={ref}
           {...props}
         ></input>

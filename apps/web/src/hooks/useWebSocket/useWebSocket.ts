@@ -1,25 +1,22 @@
 import { WebSocketService } from '@services'
+import { TMessage } from '@/domains/chat/types'
 
 export const useWebSocket = () => {
-  const joinChat = (chatId: number) => {
-    WebSocketService.getInstance().emit('joinChat', { chatId })
-  }
-
-  const sendMessage = (userId: number | undefined, content: string) => {
-    console.log(userId)
-    console.log(content)
+  const sendMessage = (content: string) => {
     WebSocketService.getInstance().emit('message', {
-      userId,
       content,
     })
   }
 
-  const listenForMessages = (callback: () => void) => {
+  const listenForMessages = (callback: (message: TMessage) => void) => {
     WebSocketService.getInstance().on('message', callback)
+
+    return () => {
+      WebSocketService.getInstance().off('message', callback)
+    }
   }
 
   return {
-    joinChat,
     sendMessage,
     listenForMessages,
   }

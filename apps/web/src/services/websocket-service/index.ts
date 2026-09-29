@@ -16,6 +16,15 @@ export class WebSocketService {
     this.socket = createSocket()
   }
 
+  connect(token: string) {
+    this.socket.auth = { token }
+    this.socket.connect()
+  }
+
+  disconnect() {
+    this.socket.disconnect()
+  }
+
   on(event: string, callback: (...args: any[]) => void) {
     this.socket.on(event, callback)
   }
