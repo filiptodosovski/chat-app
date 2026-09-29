@@ -45,7 +45,7 @@ export const ChatDialog: FC<IChatDialogProps> = ({
   const onHandleSendMessage = () => {
     if (!message) return
 
-    sendMessage(session?.user?.id, message)
+    sendMessage(message)
     setMessage('')
   }
 

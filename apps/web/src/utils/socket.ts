@@ -4,6 +4,9 @@ import { Manager } from 'socket.io-client'
 const URL = 'http://localhost:3200'
 
 export const createSocket = () => {
-  const manager = new Manager(URL, { transports: ['websocket'] })
+  const manager = new Manager(URL, {
+    transports: ['websocket'],
+    autoConnect: false,
+  })
   return manager.socket('/')
 }

@@ -1,4 +1,5 @@
 import {
+  ConnectedSocket,
   MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -7,11 +8,12 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
+import { Logger } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { Server, Socket } from 'socket.io';
-import * as console from 'node:console';
 import * as process from 'node:process';
-import { TokenService } from '../auth/token.service';
 import { MessageService } from '../message/message.service';
+import { UserJwtPayload } from '../auth/types';
 
 const wsPort = parseInt(process.env.WS_PORT ?? '3200', 10);
 
@@ -25,19 +27,31 @@ export class MessageGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
   @WebSocketServer() server: Server;
-  private readonly logger = console;
+  private readonly logger = new Logger(MessageGateway.name);
 
   constructor(
-    private tokenService: TokenService,
+    private jwtService: JwtService,
     private messageService: MessageService,
   ) {}
 
   afterInit(server: Server) {
     this.logger.log(`Initialized ${server} server`);
   }
-  // Move this to middleware
+
   handleConnection(client: Socket) {
-    console.log('client connected', client);
+    const token = client.handshake.auth?.token;
+    if (!token) {
+      client.disconnect();
+      return;
+    }
+
+    try {
+      const payload = this.jwtService.verify<UserJwtPayload>(token);
+      client.data.userId = payload.userId;
+      this.logger.log(`Client with ${payload.userId} connected`);
+    } catch {
+      client.disconnect();
+    }
   }
 
   handleDisconnect(client: Socket) {
@@ -46,9 +60,16 @@ export class MessageGateway
   }
 
   @SubscribeMessage('message')
-  async handleMessage(@MessageBody() payload: any) {
-    console.log('message', payload);
-    const { userId, content } = payload;
+  async handleMessage(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() payload: { content: string },
+  ) {
+    const content = payload?.content;
+    if (!content) {
+      return;
+    }
+
+    const userId = client.data.userId;
     const message = await this.messageService.create(content, userId);
     this.server.emit('message', message);
   }
