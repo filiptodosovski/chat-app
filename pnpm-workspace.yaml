@@ -1,0 +1,10 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+overrides:
+  validator: ^13.15.0
+
+allowBuilds:
+  bcrypt: true
+  unrs-resolver: true
