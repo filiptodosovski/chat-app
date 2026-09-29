@@ -47,7 +47,8 @@ export const ChatDialog: FC<IChatDialogProps> = ({
     })
   }, [queryEnabled, listenForMessages, queryClient])
 
-  const isMyMessage = (email: string) => session?.user?.username === username
+  const isMyMessage = (message: TMessage) =>
+    message.user.id === session?.user?.id
 
   const onHandleSendMessage = () => {
     if (!message) return
