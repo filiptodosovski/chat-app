@@ -7,11 +7,11 @@ const environment = process.env.NODE_ENV ?? 'development';
 
 export const config: DataSourceOptions = {
   type: 'postgres',
-  synchronize: true,
+  synchronize: process.env.DB_SYNCHRONIZE === 'true',
   logging: environment === 'development',
   host: process.env.DB_HOST,
   port: parseInt(process.env.DB_PORT ?? '5432', 10),
-  username: process.env.DB_USER,
+  username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
   migrationsRun: false,

@@ -54,5 +54,5 @@ export default NextAuth({
   pages: {
     signIn: '/login',
   },
-  secret: 'secret', // Hardcoded only because we need to get the user payload in middleware.ts, as next-auth requires this secret (NEXTAUTH_SECRET)
+  secret: process.env.NEXTAUTH_SECRET,
 })

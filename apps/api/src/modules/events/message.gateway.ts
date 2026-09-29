@@ -16,10 +16,11 @@ import { MessageService } from '../message/message.service';
 import { UserJwtPayload } from '../auth/types';
 
 const wsPort = parseInt(process.env.WS_PORT ?? '3200', 10);
+const webOrigin = process.env.WEB_ORIGIN ?? 'http://localhost:3000';
 
 @WebSocketGateway(wsPort, {
   cors: {
-    origin: '*',
+    origin: webOrigin,
   },
   transports: ['websocket', 'polling'],
 })
