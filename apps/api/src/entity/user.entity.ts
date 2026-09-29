@@ -7,7 +7,7 @@ export class User extends Base {
   @Column()
   username: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
 
   @OneToMany(() => Message, (message) => message.user, { onDelete: 'CASCADE' })

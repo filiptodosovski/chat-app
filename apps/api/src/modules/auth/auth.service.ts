@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -12,7 +12,7 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, password: string) {
-    const user = await this.userService.findOne(username);
+    const user = await this.userService.findOneWithPassword(username);
     if (user && (await bcrypt.compare(password, user.password))) {
       const { password, ...result } = user;
       return result;
@@ -21,25 +21,14 @@ export class AuthService {
   }
 
   async login(user: IUserLoginPayload) {
-    const userFromDb = await this.userService.findOne(user.username);
+    const userData = await this.validateUser(user.username, user.password);
 
-    if (!userFromDb) {
-      throw new HttpException('User not found!', HttpStatus.BAD_REQUEST);
-    }
-
-    const { password, ...userData } = userFromDb;
-
-    const compare = await bcrypt.compare(user.password, password ?? '');
-
-    if (!compare) {
-      throw new HttpException(
-        'Email or password is incorrect!',
-        HttpStatus.BAD_REQUEST,
-      );
+    if (!userData) {
+      throw new UnauthorizedException('Invalid username or password');
     }
 
     const payload: UserJwtPayload = {
-      userId: userFromDb.id,
+      userId: userData.id,
       username: user.username,
     };
 
